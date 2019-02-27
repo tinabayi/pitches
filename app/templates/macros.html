@@ -1,0 +1,10 @@
+<!-- Displaying reviews macro -->
+{% macro displaypitches(review_list) %}
+    {% for pitch in pitches %}
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
+        <h2> Best pitches </h2>
+
+        <p> {{ pitch.description }}</p>
+    </div>
+    {% endfor %}
+{% endmacro %}
