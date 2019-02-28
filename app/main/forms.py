@@ -5,7 +5,7 @@ from wtforms.validators import Required
 class ReviewForm(FlaskForm):
 
    
-    review = TextAreaField('Create pitches', validators=[Required()])
+    description= TextAreaField('Create pitches', validators=[Required()])
     submit = SubmitField('Submit')
 
 class UpdateProfile(FlaskForm):

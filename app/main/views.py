@@ -35,9 +35,9 @@ def new_pitch():
 
     if form.validate_on_submit():
        
-        pitch = form.pitch.data
-        new_pitch = Pitch(username,pitch)
-        new_pitch.save_pitch()
+        description = form.description.data
+        # new_pitch = Pitch(username,pitch)
+        new_pitch.save_pitches()
         return redirect(url_for('username',id = username.id ))
 
     title = 'Welcome to The best pitches Website Online'
@@ -94,4 +94,29 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-    return render_template('profile/update.html',form =form)   
+    return render_template('profile/update.html',form =form) 
+
+@main.route('/pitch/new', methods = ['GET','POST'])
+@login_required
+def create_pitch():
+   form = PitchForm()
+   # Pitch = pitch.Pitch
+   # movie = get_movie(id)
+
+   if form.validate_on_submit():
+       # title = form.title.data
+       teaser = form.teaser.data
+       pitch = form.pitch.data
+       new_pitch = Pitch(user_id=current_user.id,teaser=teaser, pitch=pitch)
+       new_pitch.save_pitch()
+       return redirect(url_for('.index',pitch = pitch ))
+
+   # username = f'{user.username} pitch'
+   return render_template('new_pitch.html', pitch_form=form)
+
+
+@main.route('/pitches')
+def display_pitch():
+   all_pitches = Pitch.get_pitches()
+   print(all_pitches)
+   return render_template("create_pitch.html",all_pitches=all_pitches)

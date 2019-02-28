@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container">
+
+   {{for pitches in all_pitches}}
+   {{pitches}}
+{{endfor}}
+</div>
+
+   
+{% endblock%}
+       
+</body>
+</html>
