@@ -42,21 +42,9 @@ class Pitch(db.Model):
    
 
     
-
-
-
-class Pitch:
-
-    all_pitches = []
-
-    def __init__(self,username,description):
-        self.username= username
-        self.description = description
-        
-
-
     def save_pitches(self):
-        Pitch.all_pitches.append(self)
+        db.session.add(self)
+        db.session.commit()
 
 
     @classmethod
@@ -64,24 +52,10 @@ class Pitch:
         Pitch.all_pitches.clear()
 
     @classmethod
-    def get_pitch(cls):
+    def get_pitches(id):
+        pitches=Pitch.query.all()
 
-        response = []
-
-        for pitch in cls.all_pitches:
-            if pitch.pitch:
-                response.append(pitch)
-
-        return response
-
-
-
-
-
-
-
-
-
+        return pitches
 
    
 

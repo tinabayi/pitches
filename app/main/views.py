@@ -6,13 +6,13 @@
 
 # from .forms import ReviewForm
 
-from flask_login import login_required
+from flask_login import login_required 
 
-from flask import render_template,redirect,url_for
+from flask import render_template,redirect,url_for, abort
 from . import main
 
 from .. import db,photos
-from ..models import Pitch
+from ..models import Pitch,User
 from .forms import ReviewForm
 # Pitch= pitches.Pitch
 
@@ -23,9 +23,9 @@ def index():
     View root page function that returns the index page and its data
     '''
 
-    
+    all_pitches=Pitch.get_pitches()
     title = 'Home - Welcome to The best pitches Website Online'
-    return render_template('index.html', title = title)
+    return render_template('index.html', title = title ,all_pitches = all_pitches)
 
 
 @main.route('/pitch/new', methods = ['GET','POST'])
@@ -36,12 +36,20 @@ def new_pitch():
     if form.validate_on_submit():
        
         description = form.description.data
-        # new_pitch = Pitch(username,pitch)
+        new_pitch = Pitch(description=description)
         new_pitch.save_pitches()
-        return redirect(url_for('username',id = username.id ))
+        return redirect(url_for('main.index',description=description))
+        
 
     title = 'Welcome to The best pitches Website Online'
     return render_template('pitch.html',title = title, review_form=form, pitches=pitches)
+
+
+#    @main.route('/pitches')
+# def diplay_pitch():
+#    all_pitches = Pitch.get_pitches()
+#    print(all_pitches)
+#    return render_template("pitches.html",all_pitches=all_pitches) 
 
 
 
@@ -96,23 +104,23 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form) 
 
-@main.route('/pitch/new', methods = ['GET','POST'])
-@login_required
-def create_pitch():
-   form = PitchForm()
-   # Pitch = pitch.Pitch
-   # movie = get_movie(id)
+# @main.route('/pitch/new', methods = ['GET','POST'])
+# @login_required
+# def create_pitch():
+#    form = PitchForm()
+#    # Pitch = pitch.Pitch
+#    # movie = get_movie(id)
 
-   if form.validate_on_submit():
-       # title = form.title.data
-       teaser = form.teaser.data
-       pitch = form.pitch.data
-       new_pitch = Pitch(user_id=current_user.id,teaser=teaser, pitch=pitch)
-       new_pitch.save_pitch()
-       return redirect(url_for('.index',pitch = pitch ))
+#    if form.validate_on_submit():
+#        # title = form.title.data
+#        teaser = form.teaser.data
+#        pitch = form.pitch.data
+#        new_pitch = Pitch(user_id=current_user.id,teaser=teaser, pitch=pitch)
+#        new_pitch.save_pitch()
+#        return redirect(url_for('.index',pitch = pitch ))
 
-   # username = f'{user.username} pitch'
-   return render_template('new_pitch.html', pitch_form=form)
+#    # username = f'{user.username} pitch'
+#    return render_template('new_pitch.html', pitch_form=form)
 
 
 @main.route('/pitches')
