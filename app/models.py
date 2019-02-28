@@ -67,5 +67,11 @@ class Comment(db.Model):
     description = db.Column(db.String(255))
     
 
-  
+    @classmethod
+    def get_comments(id):
+        comments=Comment.query.all()
+
+        return comments
+
+   
 

@@ -12,8 +12,8 @@ from flask import render_template,redirect,url_for, abort
 from . import main
 
 from .. import db,photos
-from ..models import Pitch,User
-from .forms import ReviewForm
+from ..models import Pitch,User,Comment
+from .forms import ReviewForm,CommentForm
 # Pitch= pitches.Pitch
 
 @main.route('/')
@@ -131,18 +131,18 @@ def display_pitch():
 
 
 
-@main.route('/comment/new', methods = ['GET','POST'])
-def add_comment():
-    form = commentForm()
-    comments =Comment.get_comment()
+@main.route('/comment/new/<int:id>', methods = ['GET','POST'])
+def add_comment(id):
+    form = CommentForm()
+    comments =Comment.get_comments()
+
 
     if form.validate_on_submit():
        
         comment = form.comment.data
         db.session.add(comment)
         db.session.commit()
-        return redirect(url_for('main.index',description=description))
-        
+        return redirect(url_for('main.index',comment=comment))
 
-    title = 'Welcome to The best pitches Website Online'
-    return render_template('pitch.html',title = title, review_form=form, pitches=pitches)
+        title = 'Welcome to The best pitches Website Online'
+        return render_template('comment.html',title = title, review_form=form, pitches=pitches,comments=comments)

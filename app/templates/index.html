@@ -25,7 +25,7 @@
         {%for pitches in all_pitches %}
 
         <p>{{pitches.description}}</p>
-    
+      <button ><a href="/comment/new/{{pitches.id}}">comment</a></button>
         {% endfor %}
     {% endblock%}
        
