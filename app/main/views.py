@@ -34,7 +34,7 @@ def new_pitch():
     pitches =Pitch.get_pitch()
 
     if form.validate_on_submit():
-        username = form.username.data
+       
         pitch = form.pitch.data
         new_pitch = Pitch(username,pitch)
         new_pitch.save_pitch()
