@@ -31,7 +31,7 @@ def index():
 @main.route('/pitch/new', methods = ['GET','POST'])
 def new_pitch():
     form = ReviewForm()
-    pitches =Pitch.get_pitch()
+    pitches =Pitch.get_pitches()
 
     if form.validate_on_submit():
        
