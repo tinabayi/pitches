@@ -28,10 +28,10 @@ def index():
     return render_template('index.html', title = title)
 
 
-@main.route('/pitch/<int:id>', methods = ['GET','POST'])
-def new_pitch(id):
+@main.route('/pitch/new', methods = ['GET','POST'])
+def new_pitch():
     form = ReviewForm()
-    pitches = get_pitch(id)
+    pitches =Pitch.get_pitch()
 
     if form.validate_on_submit():
         username = form.username.data
@@ -40,7 +40,7 @@ def new_pitch(id):
         new_pitch.save_pitch()
         return redirect(url_for('username',id = username.id ))
 
-    title = f'{title} pitch'
+    title = 'Welcome to The best pitches Website Online'
     return render_template('pitch.html',title = title, review_form=form, pitches=pitches)
 
 

@@ -67,12 +67,12 @@ class Pitch:
         Pitch.all_pitches.clear()
 
     @classmethod
-    def get_pitch(cls,id):
+    def get_pitch(cls):
 
         response = []
 
         for pitch in cls.all_pitches:
-            if pitch.pitch_id == id:
+            if pitch.pitch:
                 response.append(pitch)
 
         return response
