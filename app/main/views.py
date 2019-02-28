@@ -128,3 +128,21 @@ def display_pitch():
    all_pitches = Pitch.get_pitches()
    print(all_pitches)
    return render_template("create_pitch.html",all_pitches=all_pitches)
+
+
+
+@main.route('/comment/new', methods = ['GET','POST'])
+def add_comment():
+    form = commentForm()
+    comments =Comment.get_comment()
+
+    if form.validate_on_submit():
+       
+        comment = form.comment.data
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('main.index',description=description))
+        
+
+    title = 'Welcome to The best pitches Website Online'
+    return render_template('pitch.html',title = title, review_form=form, pitches=pitches)

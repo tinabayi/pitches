@@ -15,3 +15,9 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password',validators =[Required()])
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
+
+class ReviewForm(FlaskForm):
+
+    
+    comments = TextAreaField('comments', validators=[Required()])
+    submit = SubmitField('Submit')
